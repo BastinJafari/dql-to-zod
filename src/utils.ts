@@ -89,7 +89,14 @@ export const dqlSchemaJsonToZodSchemaString = (dqlSchema: DQLSchema) => {
         );
       else {
         const indentation = "\t";
-        zodSchemaString += `${indentation}${field}: z.${dqlTypeToZodTypeMap[dqlType]},\n`;
+        const directive = dqlSchema.directives.find(
+          (directive) => directive.name === field
+        )
+        const isOptional = directive?.index?.includes("term") ? false : true;
+        if (isOptional) {
+          zodSchemaString += `${indentation}${field}: z.${dqlTypeToZodTypeMap[dqlType]}.optional(),\n`;
+        } else
+          zodSchemaString += `${indentation}${field}: z.${dqlTypeToZodTypeMap[dqlType]},\n`;
       }
     }
     zodSchemaString += `})\n\n`;
