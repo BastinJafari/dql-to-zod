@@ -1,53 +1,42 @@
-[{
+[
+  {
     "dqlSchemaString": "# Define Types\n\ntype Person {\n    name\n    boss_of\n    works_for\n}\n\ntype Company {\n    name\n    industry\n    work_here #this is an alias\n}\n\n# Define Directives and index\n\nindustry: string @index(term) .\nboss_of: [uid] .\nname: string @index(exact, term) .\nworks_for: [uid] .\nwork_here: [uid] .",
     "dqlSchemaParsed": {
-        "types": [
-            {
-                "name": "Person",
-                "fields": [
-                    "name",
-                    "boss_of",
-                    "works_for"
-                ]
-            },
-            {
-                "name": "Company",
-                "fields": [
-                    "name",
-                    "industry",
-                    "work_here"
-                ]
-            }
-        ],
-        "directives": [
-            {
-                "name": "industry",
-                "type": "string",
-                "index": [
-                    "term"
-                ]
-            },
-            {
-                "name": "boss_of",
-                "type": "[uid]"
-            },
-            {
-                "name": "name",
-                "type": "string",
-                "index": [
-                    "exact",
-                    "term"
-                ]
-            },
-            {
-                "name": "works_for",
-                "type": "[uid]"
-            },
-            {
-                "name": "work_here",
-                "type": "[uid]"
-            }
-        ]
-    }
-}]
-
+      "types": [
+        {
+          "name": "Person",
+          "fields": ["name", "boss_of", "works_for"]
+        },
+        {
+          "name": "Company",
+          "fields": ["name", "industry", "work_here"]
+        }
+      ],
+      "directives": [
+        {
+          "name": "industry",
+          "type": "string",
+          "index": ["term"]
+        },
+        {
+          "name": "boss_of",
+          "type": "[uid]"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "index": ["exact", "term"]
+        },
+        {
+          "name": "works_for",
+          "type": "[uid]"
+        },
+        {
+          "name": "work_here",
+          "type": "[uid]"
+        }
+      ]
+    },
+    "zodSchemaString": "import { z } from 'zod'\n\n    const Person = z.object({\n      name: z.string(),\n      boss_of: z.array(z.string().uuid()).optional(),\n      works_for: z.array(z.string().uuid()).optional(),\n    })\n\n    type Person = z.infer<typeof Person>\n    \n    const Company = z.object({\n      name: z.string(),\n      industry: z.string(),\n      work_here: z.array(z.string().uuid()).optional(),\n    })\n    \n    type Company = z.infer<typeof Company>\n    "
+  }
+]
