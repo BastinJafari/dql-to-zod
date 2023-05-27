@@ -18,7 +18,7 @@ describe("generateZodSchema", () => {
     
     const Company = z.object({
       name: z.string(),
-      industry: z.string().optional(),
+      industry: z.string(),
       work_here: z.array(z.string().uuid()).optional(),
     })
     
