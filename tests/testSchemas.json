@@ -1,0 +1,53 @@
+[{
+    "dqlSchemaString": "# Define Types\n\ntype Person {\n    name\n    boss_of\n    works_for\n}\n\ntype Company {\n    name\n    industry\n    work_here #this is an alias\n}\n\n# Define Directives and index\n\nindustry: string @index(term) .\nboss_of: [uid] .\nname: string @index(exact, term) .\nworks_for: [uid] .\nwork_here: [uid] .",
+    "dqlSchemaParsed": {
+        "types": [
+            {
+                "name": "Person",
+                "fields": [
+                    "name",
+                    "boss_of",
+                    "works_for"
+                ]
+            },
+            {
+                "name": "Company",
+                "fields": [
+                    "name",
+                    "industry",
+                    "work_here"
+                ]
+            }
+        ],
+        "directives": [
+            {
+                "name": "industry",
+                "type": "string",
+                "index": [
+                    "term"
+                ]
+            },
+            {
+                "name": "boss_of",
+                "type": "[uid]"
+            },
+            {
+                "name": "name",
+                "type": "string",
+                "index": [
+                    "exact",
+                    "term"
+                ]
+            },
+            {
+                "name": "works_for",
+                "type": "[uid]"
+            },
+            {
+                "name": "work_here",
+                "type": "[uid]"
+            }
+        ]
+    }
+}]
+
