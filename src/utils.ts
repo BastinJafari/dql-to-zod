@@ -28,13 +28,13 @@ export const parseDqlSchema = (dqlSchemaString: string): DQLSchema => {
 
   console.log(lines)
 
-  for (let n = 0 n < lines.length n++) {
+  for (let n = 0; n < lines.length ;n++) {
     if (lines[n].startsWith("type")) {
       const type: Type = {
         name: lines[n].split(" ")[1],
         fields: [],
       }
-      for (let i = n + 1 i < lines.length i++) {
+      for (let i = n + 1; i < lines.length; i++) {
         if (lines[i].startsWith("}")) {
           n = i
           break
