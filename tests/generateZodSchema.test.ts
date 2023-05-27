@@ -13,6 +13,8 @@ describe("generateZodSchema", () => {
       boss_of: z.array(z.string().uuid()).optional(),
       works_for: z.array(z.string().uuid()).optional(),
     });
+
+    type Person = z.infer<typeof Person>;
     
     const Company = z.object({
       name: z.string(),
@@ -20,8 +22,7 @@ describe("generateZodSchema", () => {
       work_here: z.array(z.string().uuid()).optional(),
     });
     
-    type PersonType = z.infer<typeof Person>;
-    type CompanyType = z.infer<typeof Company>;
+    type Company = z.infer<typeof Company>;
     `;
 
     const schema = generateZodSchema({
@@ -63,10 +64,9 @@ describe("generateZodSchema", () => {
 
     const data = await fs.promises.readFile(
       "src/generatedZodSchema.ts",
-      "utf8",
+      "utf8"
     );
 
-    expect(data).toMatch(zodSchemaString);
-
+    expect(data.replace(/\s/g, "")).toEqual(zodSchemaString.replace(/\s/g, ""));
   });
 });

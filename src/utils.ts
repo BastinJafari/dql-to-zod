@@ -73,7 +73,7 @@ export const dqlSchemaJsonToZodSchemaString = (dqlSchema: DQLSchema) => {
     datetime: "date()",
   };
 
-  let zodSchemaString = `import { z } from "zod";\n\n`;
+  let zodSchemaString = `import { z } from 'zod';\n\n`;
 
   for (const type of dqlSchema.types) {
     zodSchemaString += `const ${type.name} = z.object({\n`;
@@ -91,7 +91,7 @@ export const dqlSchemaJsonToZodSchemaString = (dqlSchema: DQLSchema) => {
         const indentation = "\t";
         const directive = dqlSchema.directives.find(
           (directive) => directive.name === field
-        )
+        );
         const isOptional = directive?.index?.includes("term") ? false : true;
         if (isOptional) {
           zodSchemaString += `${indentation}${field}: z.${dqlTypeToZodTypeMap[dqlType]}.optional(),\n`;
@@ -100,7 +100,9 @@ export const dqlSchemaJsonToZodSchemaString = (dqlSchema: DQLSchema) => {
       }
     }
     zodSchemaString += `})\n\n`;
+
+    zodSchemaString += `type ${type.name} = z.infer<typeof ${type.name}>;\n\n`;
   }
 
-  return zodSchemaString;
+  return zodSchemaString
 };
