@@ -64,15 +64,33 @@ export const parseDqlSchema = (dqlSchemaString: string): DQLSchema => {
 };
 
 export const dqlSchemaJsonToZodSchemaString = (dqlSchema: DQLSchema) => {
+  const dqlTypeToZodTypeMap = {
+    string: "string()",
+    int: "number().int()",
+    "[uid]": "array(z.string().uuid())",
+    bool: "boolean()",
+    float: "number()",
+    datetime: "date()",
+  };
+
   let zodSchemaString = `import { z } from "zod";\n\n`;
 
   for (const type of dqlSchema.types) {
-    zodSchemaString += `const ${type.name} = z.object({
-        `;
-    for (const field of type.fields) {
-      zodSchemaString += `${field}: z.${
-        dqlSchema.directives.find((directive) => directive.name === field)?.type
-      }(),\n`;
+    zodSchemaString += `const ${type.name} = z.object({\n`;
+
+    for (const [index, field] of type.fields.entries()) {
+      const dqlType = dqlSchema.directives.find(
+        (directive) => directive.name === field
+      )?.type as keyof typeof dqlTypeToZodTypeMap;
+
+      if (dqlType === undefined)
+        throw new Error(
+          `Could not find type for field ${field} in type ${type.name}`
+        );
+      else {
+        const indentation = "\t";
+        zodSchemaString += `${indentation}${field}: z.${dqlTypeToZodTypeMap[dqlType]},\n`;
+      }
     }
     zodSchemaString += `})\n\n`;
   }
