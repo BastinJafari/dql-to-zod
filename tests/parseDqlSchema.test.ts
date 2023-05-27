@@ -1,14 +1,6 @@
-//Tests for parseDqlSchema.ts
-// Path: tests/parseDqlSchema.test.ts
-// Compare this snippet from src/parseDqlSchema.ts:
-// // src/parseDqlSchema.ts
-// type DQLSchema = Record<string, string>;
-//
+import { parseDqlSchema } from "../src/utils";
 
-import parseDqlSchema from "../src/parseDqlSchema";
-
-const testSchema = 
-`# Define Types
+const testSchema = `# Define Types
 
 type Person {
     name
@@ -31,3 +23,44 @@ works_for: [uid] .
 work_here: [uid] .`;
 
 console.log(JSON.stringify(parseDqlSchema(testSchema), null, 2));
+
+describe("parseDqlSchema", () => {
+  it("should return a DQLSchema object", () => {
+    expect(parseDqlSchema(testSchema)).toEqual({
+      types: [
+        {
+          name: "Person",
+          fields: ["name", "boss_of", "works_for"],
+        },
+        {
+          name: "Company",
+          fields: ["name", "industry", "work_here"],
+        },
+      ],
+      directives: [
+        {
+          name: "industry",
+          type: "string",
+          index: ["term"],
+        },
+        {
+          name: "boss_of",
+          type: "[uid]",
+        },
+        {
+          name: "name",
+          type: "string",
+          index: ["exact", "term"],
+        },
+        {
+          name: "works_for",
+          type: "[uid]",
+        },
+        {
+          name: "work_here",
+          type: "[uid]",
+        },
+      ],
+    });
+  });
+});
