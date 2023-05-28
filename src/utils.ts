@@ -67,6 +67,7 @@ export const dqlSchemaJsonToZodSchemaString = (dqlSchema: DQLSchema) => {
   const dqlTypeToZodTypeMap = {
     string: "string()",
     int: "number().int()",
+    uid: "string().uuid()",
     "[uid]": "array(z.string().uuid())",
     bool: "boolean()",
     float: "number()",
@@ -95,10 +96,12 @@ export const dqlSchemaJsonToZodSchemaString = (dqlSchema: DQLSchema) => {
           (directive) => directive.name === field
         )
         const isOptional = directive?.index?.includes("term") ? false : true
+        const zodType = dqlTypeToZodTypeMap[dqlType]
+        if(zodType === undefined) throw new Error(`Could not find zod type for dql type ${dqlType}`)
         if (isOptional) {
-          zodSchemaString += `${indentation}${fieldWithoutTypePrefix}: z.${dqlTypeToZodTypeMap[dqlType]}.optional(),\n`
+          zodSchemaString += `${indentation}${fieldWithoutTypePrefix}: z.${zodType}.optional(),\n`
         } else
-          zodSchemaString += `${indentation}${fieldWithoutTypePrefix}: z.${dqlTypeToZodTypeMap[dqlType]},\n`
+          zodSchemaString += `${indentation}${fieldWithoutTypePrefix}: z.${zodType},\n`
       }
     }
     zodSchemaString += `})\n\n`
