@@ -79,6 +79,8 @@ export const dqlSchemaJsonToZodSchemaString = (dqlSchema: DQLSchema) => {
     zodSchemaString += `const ${type.name} = z.object({\n`
 
     for (const [index, field] of type.fields.entries()) {
+      const fieldWithoutTypePrefix = field.split(".").slice(-1)[0]
+
       const dqlType = dqlSchema.directives.find(
         (directive) => directive.name === field
       )?.type as keyof typeof dqlTypeToZodTypeMap
@@ -94,9 +96,9 @@ export const dqlSchemaJsonToZodSchemaString = (dqlSchema: DQLSchema) => {
         )
         const isOptional = directive?.index?.includes("term") ? false : true
         if (isOptional) {
-          zodSchemaString += `${indentation}${field}: z.${dqlTypeToZodTypeMap[dqlType]}.optional(),\n`
+          zodSchemaString += `${indentation}${fieldWithoutTypePrefix}: z.${dqlTypeToZodTypeMap[dqlType]}.optional(),\n`
         } else
-          zodSchemaString += `${indentation}${field}: z.${dqlTypeToZodTypeMap[dqlType]},\n`
+          zodSchemaString += `${indentation}${fieldWithoutTypePrefix}: z.${dqlTypeToZodTypeMap[dqlType]},\n`
       }
     }
     zodSchemaString += `})\n\n`
