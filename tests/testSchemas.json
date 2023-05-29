@@ -120,8 +120,7 @@
         {
           "name": "User.email",
           "type": "string",
-          "index": ["exact"],
-          "upsert": true
+          "index": ["exact"]        
         },
         {
           "name": "User.name",
@@ -134,6 +133,22 @@
         {
           "name": "User.spaces",
           "type": "[uid]"
+        },
+        {
+          "name": "email",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "password",
+          "type": "string"
         }
       ]
     },
