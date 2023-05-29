@@ -1,4 +1,5 @@
 import { DQLSchema, Directive, Type } from "./types";
+import fs from 'fs'
 
 export const removeCommentsOutOfLine = (line: string): string => {
   if (line.startsWith("#")) {
@@ -130,3 +131,11 @@ export const dqlSchemaJsonToZodSchemaString = (dqlSchema: DQLSchema) => {
 
   return zodSchemaString;
 };
+
+
+export const generateZodSchema = (dqlSchema: DQLSchema) => {
+    
+  const zodSchemaString = dqlSchemaJsonToZodSchemaString(dqlSchema)
+
+  fs.writeFileSync("src/generatedZodSchema.ts", zodSchemaString)
+}

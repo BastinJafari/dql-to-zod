@@ -1,6 +1,6 @@
 //tests for generateZodSchema
 
-import { generateZodSchema } from "../src/generateZodSchema"
+import { generateZodSchema } from "../src/utils"
 import fs from "fs"
 const testSchemas = require("./testSchemas.json")
 describe("generateZodSchema", () => {
