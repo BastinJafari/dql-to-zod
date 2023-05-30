@@ -1,9 +1,9 @@
 {
   "name": "dql-to-zod",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "description": "This package parses a DQL schema and returns zod validators and types",
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
+  "main": "build/src/index.js",
+  "types": "build/src/index.d.ts",
   "files": [
     "build/"
   ],
@@ -12,7 +12,8 @@
   "private": false,
   "scripts": {
     "build": "tsc",
-    "test": "yarn jest"
+    "test": "yarn jest",
+    "prepublishOnly": "yarn build"
   },
   "dependencies": {
     "@types/jest": "^29.5.1",
