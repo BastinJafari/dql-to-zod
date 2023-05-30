@@ -1,8 +1,12 @@
 {
   "name": "dql-to-zod",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "This package parses a DQL schema and returns zod validators and types",
-  "main": "src/index.ts",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build/"
+  ],
   "author": "Bastin Jafari",
   "license": "\\",
   "private": false,
