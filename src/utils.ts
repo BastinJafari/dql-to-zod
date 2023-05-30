@@ -133,9 +133,9 @@ export const dqlSchemaJsonToZodSchemaString = (dqlSchema: DQLSchema) => {
 };
 
 
-export const generateZodSchema = (dqlSchema: DQLSchema) => {
+export const generateZodSchema = (dqlSchema: DQLSchema, filePath: string) => {
     
   const zodSchemaString = dqlSchemaJsonToZodSchemaString(dqlSchema)
 
-  fs.writeFileSync("src/generatedZodSchema.ts", zodSchemaString)
+  fs.writeFileSync(filePath, zodSchemaString)
 }
