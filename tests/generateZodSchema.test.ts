@@ -9,7 +9,7 @@ describe("generateZodSchema", () => {
     
     for (const testSchema of testSchemas) {
 
-        generateZodSchema(testSchema.dqlSchemaParsed)
+        generateZodSchema(testSchema.dqlSchemaParsed, "src/generatedZodSchema.ts")
         const data = await fs.promises.readFile(
             "src/generatedZodSchema.ts",
             "utf8"
