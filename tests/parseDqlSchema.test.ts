@@ -6,6 +6,8 @@ describe("parseDqlSchema", () => {
     for (const testSchema of testSchemas) {
 
       const parsedSchema = parseDqlSchema(testSchema.dqlSchemaString)
+      //insert time delay to see if file got created
+      
       expect(parsedSchema).toEqual(
         testSchema.dqlSchemaParsed
       )
