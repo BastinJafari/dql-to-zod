@@ -95,7 +95,7 @@ export const dqlSchemaJsonToZodSchemaString = (dqlSchema: DQLSchema) => {
   let zodSchemaString = `import { z } from 'zod'\n\n`;
 
   for (const type of dqlSchema.types) {
-    zodSchemaString += `const ${type.name} = z.object({\n`;
+    zodSchemaString += `export const ${type.name} = z.object({\n`;
 
     for (const [index, field] of type.fields.entries()) {
       const fieldWithoutTypePrefix = field.split(".").slice(-1)[0];
@@ -125,7 +125,7 @@ export const dqlSchemaJsonToZodSchemaString = (dqlSchema: DQLSchema) => {
     }
     zodSchemaString += `})\n\n`;
 
-    zodSchemaString += `type ${type.name} = z.infer<typeof ${type.name}>\n\n`;
+    zodSchemaString += `export type ${type.name} = z.infer<typeof ${type.name}>\n\n`;
   }
 
   return zodSchemaString;
