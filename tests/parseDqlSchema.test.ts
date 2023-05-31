@@ -6,7 +6,6 @@ describe("parseDqlSchema", () => {
     for (const testSchema of testSchemas) {
 
       const parsedSchema = parseDqlSchema(testSchema.dqlSchemaString)
-      console.log("parsed Schema:",JSON.stringify(parsedSchema, null, 2))
       expect(parsedSchema).toEqual(
         testSchema.dqlSchemaParsed
       )

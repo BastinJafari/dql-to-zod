@@ -44,7 +44,6 @@ export const parseDqlSchema = (dqlSchemaString: string): DQLSchema => {
 
     //remove lines that include dgraph directives
     if (lines[n].startsWith("dgraph")) {
-      console.log("removing line with dgraph directive:", lines[n]);
       continue;
     }
 
